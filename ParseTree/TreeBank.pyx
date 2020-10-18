@@ -1,12 +1,8 @@
 import os
 import re
 
-from ParseTree.ParseTree cimport ParseTree
-
 
 cdef class TreeBank:
-
-    cdef list parseTrees
 
     def __init__(self, folder: str = None, pattern: str = None):
         """
