@@ -9,7 +9,7 @@ setup(
     packages=['ParseTree', 'ParseTree.NodeCondition'],
     package_data={'ParseTree': ['*.pxd', '*.pyx', '*.c', '*.py'],
                   'ParseTree.NodeCondition': ['*.pxd', '*.pyx', '*.c', '*.py']},
-    url='https://github.com/olcaytaner/ParseTree-Cy',
+    url='https://github.com/StarlangSoftware/ParseTree-Cy',
     license='',
     author='olcaytaner',
     author_email='olcay.yildiz@ozyegin.edu.tr',
