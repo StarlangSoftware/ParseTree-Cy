@@ -604,8 +604,8 @@ cdef class ParseNode:
         else:
             st = "(" + self.data.getName()
             for child in self.children:
-                st += child.__str__()
-            return st + ")"
+                st += " " + child.__str__()
+            return st + ") "
 
     cpdef moveLeft(self, ParseNode node):
         """
