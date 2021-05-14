@@ -5,7 +5,7 @@ setup(
     ext_modules=cythonize(["ParseTree/*.pyx", "ParseTree/NodeCondition/*.pyx"],
                           compiler_directives={'language_level': "3"}),
     name='NlpToolkit-ParseTree-Cy',
-    version='1.0.3',
+    version='1.0.4',
     packages=['ParseTree', 'ParseTree.NodeCondition'],
     package_data={'ParseTree': ['*.pxd', '*.pyx', '*.c', '*.py'],
                   'ParseTree.NodeCondition': ['*.pxd', '*.pyx', '*.c', '*.py']},
