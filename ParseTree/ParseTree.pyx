@@ -1,3 +1,5 @@
+import os
+
 from ParseTree.NodeCollector cimport NodeCollector
 from ParseTree.NodeCondition.IsEnglishLeaf cimport IsEnglishLeaf
 
@@ -19,6 +21,7 @@ cdef class ParseTree:
         if isinstance(rootOrFileName, ParseNode):
             self.root = rootOrFileName
         elif isinstance(rootOrFileName, str):
+            self.name = os.path.split(rootOrFileName)[1]
             inputFile = open(rootOrFileName, "r", encoding="utf8")
             line = inputFile.readline()
             if "(" in line and ")" in line:
@@ -51,6 +54,12 @@ cdef class ParseTree:
             if leafList[i] == parseNode:
                 return leafList[i + 1]
         return None
+
+    cpdef setName(self, str name):
+        self.name = name
+
+    cpdef str getName(self):
+        return self.name
 
     cpdef ParseNode previousLeafNode(self, ParseNode parseNode):
         """

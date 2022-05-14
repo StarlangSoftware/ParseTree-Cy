@@ -20,6 +20,7 @@ cdef class TreeBank:
         self.parseTrees = []
         if str is not None:
             for root, dirs, files in os.walk(folder):
+                files.sort()
                 for file in files:
                     fileName = os.path.join(root, file)
                     if (pattern is None or pattern in fileName) and re.match("\\d+\\.", file):
@@ -74,3 +75,6 @@ cdef class TreeBank:
             The ParseTree at the given index.
         """
         return self.parseTrees[index]
+
+    cpdef removeTree(self, int i):
+        self.parseTrees.pop(i)
