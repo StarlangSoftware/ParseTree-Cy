@@ -6,7 +6,7 @@ from ParseTree.NodeCondition.IsEnglishLeaf cimport IsEnglishLeaf
 
 cdef class ParseTree:
 
-    sentenceLabels = ["SINV", "SBARQ", "SBAR", "SQ", "S"]
+    sentence_labels = ["SINV", "SBARQ", "SBAR", "SQ", "S"]
 
     def __init__(self, rootOrFileName=None):
         """
@@ -22,14 +22,14 @@ cdef class ParseTree:
             self.root = rootOrFileName
         elif isinstance(rootOrFileName, str):
             self.name = os.path.split(rootOrFileName)[1]
-            inputFile = open(rootOrFileName, "r", encoding="utf8")
-            line = inputFile.readline()
+            input_file = open(rootOrFileName, "r", encoding="utf8")
+            line = input_file.readline()
             if "(" in line and ")" in line:
                 line = line[line.index("(") + 1:line.rindex(")")].strip()
                 self.root = ParseNode(None, line, False)
             else:
                 self.root = None
-            inputFile.close()
+            input_file.close()
 
     cpdef ParseNode nextLeafNode(self, ParseNode parseNode):
         """
@@ -45,14 +45,14 @@ cdef class ParseTree:
         ParseNode
             Next leaf node after the given leaf node.
         """
-        cdef NodeCollector nodeCollector
-        cdef list leafList
+        cdef NodeCollector node_collector
+        cdef list leaf_list
         cdef int i
-        nodeCollector = NodeCollector(self.root, IsEnglishLeaf())
-        leafList = nodeCollector.collect()
-        for i in range(len(leafList) - 1):
-            if leafList[i] == parseNode:
-                return leafList[i + 1]
+        node_collector = NodeCollector(self.root, IsEnglishLeaf())
+        leaf_list = node_collector.collect()
+        for i in range(len(leaf_list) - 1):
+            if leaf_list[i] == parseNode:
+                return leaf_list[i + 1]
         return None
 
     cpdef setName(self, str name):
@@ -75,14 +75,14 @@ cdef class ParseTree:
         ParseNode
             Previous leaf node before the given leaf node.
         """
-        cdef NodeCollector nodeCollector
-        cdef list leafList
+        cdef NodeCollector node_collector
+        cdef list leaf_list
         cdef int i
-        nodeCollector = NodeCollector(self.root, IsEnglishLeaf())
-        leafList = nodeCollector.collect()
-        for i in range(1, len(leafList)):
-            if leafList[i] == parseNode:
-                return leafList[i - 1]
+        node_collector = NodeCollector(self.root, IsEnglishLeaf())
+        leaf_list = node_collector.collect()
+        for i in range(1, len(leaf_list)):
+            if leaf_list[i] == parseNode:
+                return leaf_list[i - 1]
         return None
 
     cpdef int nodeCountWithMultipleChildren(self):
@@ -119,7 +119,7 @@ cdef class ParseTree:
         return self.root.leafCount()
 
     cpdef bint isFullSentence(self):
-        if self.root is not None and self.root.data.getName() in self.sentenceLabels:
+        if self.root is not None and self.root.data.getName() in self.sentence_labels:
             return True
         return False
 
@@ -132,9 +132,9 @@ cdef class ParseTree:
         fileName : str
             Output file name
         """
-        outputFile = open(fileName, "w", encoding="utf8")
-        outputFile.write("( " + self.__str__() + " )\n")
-        outputFile.close()
+        output_file = open(fileName, "w", encoding="utf8")
+        output_file.write("( " + self.__str__() + " )\n")
+        output_file.close()
 
     cpdef correctParents(self):
         """

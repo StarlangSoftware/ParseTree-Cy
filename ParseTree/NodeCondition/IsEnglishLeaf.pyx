@@ -18,11 +18,11 @@ cdef class IsEnglishLeaf(IsLeaf):
         bool
             If the node is a leaf node and is not a dummy node, returns true; false otherwise.
         """
-        cdef str data, parentData
+        cdef str data, parent_data
         if parseNode.numberOfChildren() == 0:
             data = parseNode.getData().getName()
-            parentData = parseNode.getParent().getData().getName()
-            if "*" in data or (data == "0" and parentData == "-NONE-"):
+            parent_data = parseNode.getParent().getData().getName()
+            if "*" in data or (data == "0" and parent_data == "-NONE-"):
                 return False
             return True
         return False

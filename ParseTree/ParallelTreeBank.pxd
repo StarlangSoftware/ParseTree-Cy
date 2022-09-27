@@ -3,8 +3,8 @@ from ParseTree.TreeBank cimport TreeBank
 
 cdef class ParallelTreeBank:
 
-    cdef TreeBank fromTreeBank
-    cdef TreeBank toTreeBank
+    cdef TreeBank __from_tree_bank
+    cdef TreeBank __to_tree_bank
 
     cpdef removeDifferentTrees(self)
     cpdef int size(self)

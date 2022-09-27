@@ -37,7 +37,10 @@ cdef class ParseNode:
     NP4 = ["CD"]
     NP5 = ["JJ", "JJS", "RB", "QP"]
 
-    def __init__(self, dataOrParent, leftOrLine=None, rightOrIsLeaf=None):
+    def __init__(self,
+                 dataOrParent,
+                 leftOrLine=None,
+                 rightOrIsLeaf=None):
         """
         Another simple constructor for ParseNode. It takes inputs left and right children of this node, and the data.
         Sets the corresponding attributes with these inputs.
@@ -51,8 +54,8 @@ cdef class ParseNode:
         rightOrIsLeaf
             Right child of this node.
         """
-        cdef int parenthesisCount,i
-        cdef str childLine
+        cdef int parenthesis_count, i
+        cdef str child_line
         self.children = []
         self.parent = None
         self.data = None
@@ -69,29 +72,35 @@ cdef class ParseNode:
                     self.children.append(leftOrLine)
                     leftOrLine.parent = self
         elif (isinstance(dataOrParent, ParseNode) or dataOrParent is None) and isinstance(leftOrLine, str) and isinstance(rightOrIsLeaf, bool):
-            parenthesisCount = 0
-            childLine = ""
+            parenthesis_count = 0
+            child_line = ""
             self.parent = dataOrParent
             if rightOrIsLeaf:
                 self.data = Symbol(leftOrLine)
             else:
                 self.data = Symbol(leftOrLine[1: leftOrLine.index(" ")])
                 if leftOrLine.index(")") == leftOrLine.rindex(")"):
-                    self.children.append(ParseNode(self, leftOrLine[leftOrLine.index(" ") + 1: leftOrLine.index(")")],
-                                                   True))
+                    self.children.append(ParseNode(dataOrParent=self,
+                                                   leftOrLine=leftOrLine[leftOrLine.index(" ") + 1: leftOrLine.index(")")],
+                                                   rightOrIsLeaf=True))
                 else:
                     for i in range(leftOrLine.index(" ") + 1, len(leftOrLine)):
-                        if leftOrLine[i] != " " or parenthesisCount > 0:
-                            childLine = childLine + leftOrLine[i]
+                        if leftOrLine[i] != " " or parenthesis_count > 0:
+                            child_line = child_line + leftOrLine[i]
                         if leftOrLine[i] == "(":
-                            parenthesisCount = parenthesisCount + 1
+                            parenthesis_count = parenthesis_count + 1
                         elif leftOrLine[i] == ")":
-                            parenthesisCount = parenthesisCount - 1
-                        if parenthesisCount == 0 and len(childLine) != 0:
-                            self.children.append(ParseNode(self, childLine.strip(), False))
-                            childLine = ""
+                            parenthesis_count = parenthesis_count - 1
+                        if parenthesis_count == 0 and len(child_line) != 0:
+                            self.children.append(ParseNode(dataOrParent=self,
+                                                           leftOrLine=child_line.strip(),
+                                                           rightOrIsLeaf=False))
+                            child_line = ""
 
-    cpdef ParseNode __searchHeadChild(self, list priorityList, object direction, bint defaultCase):
+    cpdef ParseNode __searchHeadChild(self,
+                                      list priorityList,
+                                      object direction,
+                                      bint defaultCase):
         """
         Extracts the head of the children of this current node.
 
@@ -236,7 +245,9 @@ cdef class ParseNode:
                                     return self.lastChild()
         return None
 
-    cpdef addChild(self, ParseNode child, index=None):
+    cpdef addChild(self,
+                   ParseNode child,
+                   index=None):
         """
         Adds a child node at the end of the children node list.
 
@@ -279,7 +290,9 @@ cdef class ParseNode:
         for child in self.children:
             child.removeXNodes()
 
-    cpdef setChild(self, int index, ParseNode child):
+    cpdef setChild(self,
+                   int index,
+                   ParseNode child):
         """
         Replaces a child node at the given specific with a new child node.
 

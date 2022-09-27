@@ -3,7 +3,7 @@ from ParseTree.ParseTree cimport ParseTree
 
 cdef class TreeBank:
 
-    cdef list parseTrees
+    cdef list __parse_trees
 
     cpdef int size(self)
     cpdef int wordCount(self, bint excludeStopWords)
