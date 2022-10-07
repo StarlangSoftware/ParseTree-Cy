@@ -19,7 +19,7 @@ cdef class TreeBank:
         pattern : str
             File pattern such as "." ".train" ".test".
         """
-        self.__parse_trees = []
+        self.parse_trees = []
         if folder is not None:
             for root, dirs, files in os.walk(folder):
                 files.sort()
@@ -27,7 +27,7 @@ cdef class TreeBank:
                     file_name = os.path.join(root, file)
                     if (pattern is None or pattern in file_name) and re.match("\\d+\\.", file):
                         parseTree = ParseTree(file_name)
-                        self.__parse_trees.append(parseTree)
+                        self.parse_trees.append(parseTree)
 
     cpdef int size(self):
         """
@@ -38,7 +38,7 @@ cdef class TreeBank:
         int
             Number of trees in the TreeBank.
         """
-        return len(self.__parse_trees)
+        return len(self.parse_trees)
 
     cpdef int wordCount(self, bint excludeStopWords):
         """
@@ -58,7 +58,7 @@ cdef class TreeBank:
         cdef int total
         cdef ParseTree tree
         total = 0
-        for tree in self.__parse_trees:
+        for tree in self.parse_trees:
             total += tree.wordCount(excludeStopWords)
         return total
 
@@ -76,7 +76,7 @@ cdef class TreeBank:
         ParseTree
             The ParseTree at the given index.
         """
-        return self.__parse_trees[index]
+        return self.parse_trees[index]
 
     cpdef removeTree(self, int i):
-        self.__parse_trees.pop(i)
+        self.parse_trees.pop(i)
