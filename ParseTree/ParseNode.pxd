@@ -37,3 +37,12 @@ cdef class ParseNode:
     cpdef moveRight(self, ParseNode node)
     cpdef str ancestorString(self)
     cpdef constituentSpanList(self, int startIndex, list constituentSpanList)
+
+    cpdef constructor1(self, Symbol data, ParseNode left, ParseNode right)
+
+    cpdef constructor2(self, Symbol data, ParseNode left)
+
+    cpdef constructor3(self, Symbol data)
+
+    cpdef constructor4(self, ParseNode parent, str line, bint isLeaf)
+

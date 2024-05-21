@@ -20,3 +20,7 @@ cdef class ParseTree:
     cpdef ParseNode getRoot(self)
     cpdef int wordCount(self, bint excludeStopWords)
     cpdef list constituentSpanList(self)
+
+    cpdef constructor1(self, ParseNode root)
+
+    cpdef constructor2(self, str fileName)
