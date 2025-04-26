@@ -124,17 +124,15 @@ cdef class ParseNode:
         self.children = []
         self.parent = None
         self.data = None
-        if isinstance(dataOrParent, Symbol) and isinstance(leftOrLine, ParseNode) and isinstance(rightOrIsLeaf,
-                                                                                                 ParseNode):
-            if rightOrIsLeaf is not None:
+        if dataOrParent is not None and isinstance(dataOrParent, Symbol):
+            self.constructor3(dataOrParent)
+        else:
+            if rightOrIsLeaf is None:
+                self.constructor2(dataOrParent, leftOrLine)
+            elif isinstance(rightOrIsLeaf, ParseNode):
                 self.constructor1(dataOrParent, leftOrLine, rightOrIsLeaf)
             else:
-                if leftOrLine is not None:
-                    self.constructor2(dataOrParent, leftOrLine)
-                else:
-                    self.constructor3(dataOrParent)
-        elif (isinstance(dataOrParent, ParseNode) or dataOrParent is None) and isinstance(leftOrLine, str) and isinstance(rightOrIsLeaf, bool):
-            self.constructor4(dataOrParent, leftOrLine, rightOrIsLeaf)
+                self.constructor4(dataOrParent, leftOrLine, rightOrIsLeaf)
 
     cpdef ParseNode __searchHeadChild(self,
                                       list priorityList,
