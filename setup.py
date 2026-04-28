@@ -8,8 +8,8 @@ from Cython.Build import cythonize
 setup(
     ext_modules=cythonize(["ParseTree/*.pyx", "ParseTree/NodeCondition/*.pyx"],
                           compiler_directives={'language_level': "3"}),
-    name='nlptoolkit-parsetree-cy',
-    version='1.0.11',
+    name='nlptoolkit_parsetree_cy',
+    version='1.0.12',
     packages=['ParseTree', 'ParseTree.NodeCondition'],
     package_data={'ParseTree': ['*.pxd', '*.pyx', '*.c', '*.py'],
                   'ParseTree.NodeCondition': ['*.pxd', '*.pyx', '*.c', '*.py']},
